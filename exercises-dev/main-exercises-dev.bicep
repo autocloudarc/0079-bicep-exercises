@@ -2,6 +2,7 @@ targetScope = 'subscription'
 // Create a storage account resource with a type of Standard_LRS and a kind of StorageV2 
 // We assume that we've arleady authenticated to Azure and selected the lab subscription id or name
 
+@description('This is a Bicep file that deploys a lab environment')
 param primaryLocation string = 'centralus'
 param labResourceGroup string = 'rgp-lab'
 @secure()

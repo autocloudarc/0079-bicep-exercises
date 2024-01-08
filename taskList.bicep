@@ -8,13 +8,22 @@ cr1: az stack sub create --name stack-preston.parsard --location centralus --tem
 cr2: az stack sub delete --name stack-preston.parsard --delete-all --yes --verbose
 
 Pre-requisites
-0.a [x] Clone the Azure DevOps project repo bicep-exercises to your local machine with your favorite IDE (VSCode ;-))
-0.b [x] Change directory to the local folder of the cloned repo (.../bicep-exercises)
+0.0 [x] Install Visual Studio Code from https://code.visualstudio.com/download
+0.1 [x] Install PowerShell Core using: 
+a.  [x] winget search Microsoft.PowerShell 
+b.  [x] winget install --id Microsoft.Powershell --source winget
+c.  [x] Install the Az PowerShell module using: Install-Module -Name Az -AllowClobber -Scope CurrentUser -Repository PSGallery -Force -Verbose
+0.2 [x] Install Git for Windows using:
+a.  [x] winget search Git.Git
+b.  [x] winget install --id Git.Git --source winget
+0.3 [x] Install the Azure CLI from https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli
+0.4 [x] Install the az Bicep CLI extension using: 'az bicep install'
+
+0.a [x] Clone the GitHub project repo https://github.com/autocloudarc/0079-bicep-exercises to your local machine with your favorite IDE (VSCode ;-))
+0.b [x] Change directory to the local folder of the cloned repo (.../0079-bicep-exercises)
 0.c [x] Authenticate to Azure and select the target subscription for this set of exercises; Example: az login; az account set -s <mcap-azr-dev-sub-01>
 0.d [x] Verify that the account was selected properly; Example: az account show --query name -o tsv
 0.e [s] Create a new branch for your changes; Example: git checkout -b <preston.parsard>-practice (For this and remaining examples, replace <preston.parsard> with your name)
-0.f [s] Install the Azure CLI from https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli
-0.g [s] Install the Bicep CLI using: 'az bicep install'
 
 1. [x] Use the command reference cr1 to create a resource group in the 'centralus' region with a name of 'rgp-lab' in the main-exercises-<env>.bicep file
 a. [] Push changes to your branch with: git add .; git commit -m "resource(group): add"; git push origin <preston.parsard>-practice
