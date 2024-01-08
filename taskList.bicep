@@ -4,8 +4,8 @@ Exercises
 Instructions: Please complete each task below in order and place an 'x' in the checkbox when complete, i.e. [x] = complete [s] = skipped. 
 
 Command reference: (Note: In the commands below, replace stack-preston.parsard with your own stack name, i.e. stack-milla.yovovich)
-cr1: az stack sub create --name stack-preston.parsard --location centralus --template-file ./exercises-<env>/main-exercises-<env>.bicep...
-...[--parameters ./exercises-<env>/<main-exercises-<env>.bicepparam|/.exercises-<env>/main-exercises-<env>.parameters.json] --deny-settings-mode none --delete-all --yes --verbose
+cr1: az stack sub create --name stack-preston.parsard --location centralus --template-file ./exercises-dev/main-exercises-dev.bicep...
+...[--parameters ./exercises-<env>/<main-exercises-<env>.bicepparam|/.exercises-<env>/main-exercises-dev.parameters.json] --deny-settings-mode none --delete-all --yes --verbose
 cr2: az stack sub delete --name stack-preston.parsard --delete-all --yes --verbose
 
 Pre-requisites
