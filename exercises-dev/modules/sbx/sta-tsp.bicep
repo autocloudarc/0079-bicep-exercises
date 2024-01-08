@@ -6,7 +6,6 @@ az ts create --name ${{ parameters.templateSpecName }} \
   --resource-group ${{ parameters.iacResourceGroup }} \
   --location ${{ parameters.location }} \
   --template-file ${{ parameters.templateSpecSourceFile }} \
-  --parameters ${{ parameters.templateSpecParamsFile }} \
   --verbose
 */
 
