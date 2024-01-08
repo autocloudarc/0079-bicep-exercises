@@ -6,7 +6,7 @@ targetScope = 'subscription'
 param primaryLocation string = 'centralus'
 
 param labResourceGroup string = 'rgp-lab'
-@secure()
+// @secure()
 // param keyVaultSecret string
 param iacResourceGroup string = 'rgp-iac'
 param kvtName string = 'iac-kvt-01'
