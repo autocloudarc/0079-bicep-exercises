@@ -1,7 +1,0 @@
-using './sta.bicep'
-
-param primaryLocation  = 'centralus'
-param storageAccountNamePrefix = 'bcp'
-param storageAccountType = 'Standard_LRS'
-param storageAccountKind = "StorageV2"
-param staAccessTier = "Hot"

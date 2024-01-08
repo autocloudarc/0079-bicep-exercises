@@ -1,4 +1,4 @@
-// Create a storage account with a container nested resource defined
+// Using Azure DevOps pipelines, create a storage account with a container nested resource defined
 /*
 az ts create --name ${{ parameters.templateSpecName }} \
   --description ${{ parameters.templateSpecDescription }} \
