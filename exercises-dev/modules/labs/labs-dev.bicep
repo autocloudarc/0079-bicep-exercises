@@ -57,6 +57,7 @@ resource staAccounts 'Microsoft.Storage/storageAccounts@2023-01-01' = [for (staN
   }
 }]
 
+
 // Create blob service
 resource blobServices 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = [for j in range(0, length(staNames)): {
   name: 'default'
