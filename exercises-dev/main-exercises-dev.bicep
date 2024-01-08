@@ -18,15 +18,15 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
 }
 
 
-// resource iacRgp 'Microsoft.Resources/resourceGroups@2023-07-01' existing = {
-//   name: iacResourceGroup
-// }
+resource iacRgp 'Microsoft.Resources/resourceGroups@2023-07-01' existing = {
+  name: iacResourceGroup
+}
 
-// // Add a resource for an existing kev vault to retrieve its secret from the iac resouce group  
-// resource kvt 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
-//   name: kvtName
-//   scope: iacRgp
-// }
+// Add a resource for an existing kev vault to retrieve its secret from the iac resouce group  
+resource kvt 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+  name: kvtName
+  scope: iacRgp
+}
 
 // // This is just an example of how you would retrieve a secret from the existing key vault referenced above (kvt)
 // // module sql './sql.bicep' = {
