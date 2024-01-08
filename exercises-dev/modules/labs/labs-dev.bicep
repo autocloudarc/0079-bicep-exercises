@@ -7,7 +7,7 @@ param location string
 param storageAccountName string
 param storageAccountSku string
 param storageAccountKind string
-param storagePrefix string = 'sta'
+param storageAccountPrefix string 
 param guidString1 string = newGuid()
 param guidString2 string = newGuid()
 param guidString3 string = newGuid()
@@ -19,7 +19,7 @@ param mgtResourceGroup string = 'orgid-mgt'
 param containerNames array = ['container1','container2','container3']
 
 var nics = loadJsonContent('variables-dev.json')
-var deployAdditionalStorageAcct = false
+var deployAdditionalStorageAcct = true
 
 // Conditional deployment for a storage account based on the value of the deployAdditionalStorageAcct variable
 // ref: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/conditional-resource-deployment#define-condition-for-deployment
@@ -41,9 +41,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
 }
 
-var staName1 = '${storagePrefix}${substring(guidString1,0,8)}'
-var staName2 = '${storagePrefix}${substring(guidString2,0,8)}'
-var staName3 = '${storagePrefix}${substring(guidString3,0,8)}'
+var staName1 = '${storageAccountPrefix}${substring(guidString1,0,8)}'
+var staName2 = '${storageAccountPrefix}${substring(guidString2,0,8)}'
+var staName3 = '${storageAccountPrefix}${substring(guidString3,0,8)}'
 
 var staNames = [staName1,staName2,staName3]
 
@@ -101,4 +101,3 @@ output storageInfo array = [for m in range(0, storageCount): {
 output additionalStaId string = (deployAdditionalStorageAcct) ? staAdditional.id : noAdditionalStorageAccount
 
 // varible = (condition) ? true : false
-

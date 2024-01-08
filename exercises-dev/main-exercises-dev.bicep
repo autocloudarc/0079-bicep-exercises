@@ -53,6 +53,7 @@ module lab './modules/labs/labs-dev.bicep' = {
     storageAccountName: storageAccountName
     storageAccountSku: storageAccountSku
     storageAccountKind: storageAccountKind
+    storageAccountPrefix: storageAccountPrefix
   } 
 }
 
