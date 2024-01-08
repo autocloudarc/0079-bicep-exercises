@@ -88,6 +88,7 @@ var staAccountIds = [staAccounts[0].id, staAccounts[1].id, staAccounts[2].id]
 var storageCount = 3
 var noAdditionalStorageAccount = 'An additional storage account was not deployed.'
 
+
 output storageAccountId string = storageAccount.id
 output lawId string = law.id
 output staAccountId1 string = staAccounts[0].id
@@ -102,5 +103,5 @@ output storageInfo array = [for m in range(0, storageCount): {
 }]
 // ternerary operator
 output additionalStaId string = (deployAdditionalStorageAcct) ? staAdditional.id : noAdditionalStorageAccount
-
 // varible = (condition) ? true : false
+output networkInterface object = nics
