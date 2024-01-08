@@ -1,0 +1,2 @@
+az stack mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS --what-if --verbose
+az stack mg create --name ${NAME:0:63} --location $LOCATION --management-group-id $MGID --template-file $TEMPLATEFILE --parameters $PARAMETERS --deny-settings-mode none --delete-all --yes --verbose

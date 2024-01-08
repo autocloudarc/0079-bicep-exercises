@@ -1,0 +1,12 @@
+{
+    "nics": [
+        {
+            "name": "nic-01",
+            "privateIpAddress": "10.0.0.4"
+        },
+        {
+            "name": "nic-02",
+            "privateIpAddress": "10.0.0.5"
+        }
+    ]
+}
