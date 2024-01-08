@@ -11,7 +11,7 @@ param storagePrefix string = 'sta'
 param guidString1 string = newGuid()
 param guidString2 string = newGuid()
 param guidString3 string = newGuid()
-param extraStorageAcctName string = concat('staextra',newGuid())
+param extraStorageAcctName string = 'staextra${newGuid()}'
 // law exercise
 param lawName string = 'orgid-la'
 param mgtSubId string = '019181ad-6356-46c6-b584-444846096085'

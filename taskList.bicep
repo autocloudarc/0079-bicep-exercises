@@ -4,7 +4,8 @@ Exercises
 Instructions: Please complete each task below in order and place an 'x' in the checkbox when complete, i.e. [x] = complete [s] = skipped. 
 
 Command reference: (Note: In the commands below, replace stack-preston.parsard with your own stack name, i.e. stack-milla.yovovich)
-cr1: az stack sub create --name stack-preston.parsard --location centralus --template-file ./exercises-<env>/main-exercises-<env>.bicep [--parameters <main-exercises-<env>.bicepparam|main-exercises-<env>.parameters.json] --deny-settings-mode none --delete-all --yes --verbose
+cr1: az stack sub create --name stack-preston.parsard --location centralus --template-file ./exercises-<env>/main-exercises-<env>.bicep...
+...[--parameters ./exercises-<env>/<main-exercises-<env>.bicepparam|/.exercises-<env>/main-exercises-<env>.parameters.json] --deny-settings-mode none --delete-all --yes --verbose
 cr2: az stack sub delete --name stack-preston.parsard --delete-all --yes --verbose
 
 Pre-requisites
@@ -26,11 +27,11 @@ b.  [x] winget install --id Git.Git --source winget
 0.e [s] Create a new branch for your changes; Example: git checkout -b <preston.parsard>-practice (For this and remaining examples, replace <preston.parsard> with your name)
 
 1. [x] Use the command reference cr1 to create a resource group in the 'centralus' region with a name of 'rgp-lab' in the main-exercises-<env>.bicep file
-a. [] Push changes to your branch with: git add .; git commit -m "resource(group): add"; git push origin <preston.parsard>-practice
-b. [] Deploy the changes to Azure with command reference cr1 above
-c. [] Delete the deployment stack with command reference cr2 above. 
+a. [x] Push changes to your branch with: git add .; git commit -m "resource(group): add"; git push origin <preston.parsard>-practice
+b. [x] Deploy the changes to Azure with command reference cr1 above
+c. [x] Delete the deployment stack with command reference cr2 above. 
    This is just to demonstrate that the deployment is managed and maintains the state to cleanup previously deployed resources
-e. [] Redeploy the changes to Azure with command reference cr1 above
+e. [x] Redeploy the changes to Azure with command reference cr1 above
 
 2. [x] Create a storage account named sta<randomstring> in the resource group created in step 1 above where <randomstring> is the name suffix that must be randomly generated
 a. [s] Push changes to your branch with: git add .; git commit -m "storage(account): add"; git push origin <preston.parsard>-practice
