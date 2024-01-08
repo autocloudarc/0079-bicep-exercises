@@ -11,7 +11,8 @@ param storageAccountPrefix string
 param guidString1 string = newGuid()
 param guidString2 string = newGuid()
 param guidString3 string = newGuid()
-param extraStorageAcctName string = 'staextra${newGuid()}'
+param guidString4 string = newGuid()
+
 // law exercise
 param lawName string = 'orgid-la'
 param mgtSubId string = '019181ad-6356-46c6-b584-444846096085'
@@ -20,6 +21,8 @@ param containerNames array = ['container1','container2','container3']
 
 var nics = loadJsonContent('variables-dev.json')
 var deployAdditionalStorageAcct = true
+var guidStringShort = substring(guidString4,0,8)
+var extraStorageAcctName = '${storageAccountPrefix}guidString4}'
 
 // Conditional deployment for a storage account based on the value of the deployAdditionalStorageAcct variable
 // ref: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/conditional-resource-deployment#define-condition-for-deployment
