@@ -22,7 +22,7 @@ param containerNames array = ['container1','container2','container3']
 var nics = loadJsonContent('variables-dev.json')
 var deployAdditionalStorageAcct = true
 var guidStringShort = substring(guidString4,0,8)
-var extraStorageAcctName = '${storageAccountPrefix}guidString4}'
+var extraStorageAcctName = '${storageAccountPrefix}guidString4'
 
 // Conditional deployment for a storage account based on the value of the deployAdditionalStorageAcct variable
 // ref: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/conditional-resource-deployment#define-condition-for-deployment
