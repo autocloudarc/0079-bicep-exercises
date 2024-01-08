@@ -36,6 +36,7 @@ e. [x] Redeploy the changes to Azure with command reference cr1 above
 2. [x] Create a storage account named sta<randomstring> in the resource group created in step 1 above where <randomstring> is the name suffix that must be randomly generated
 a. [s] Push changes to your branch with: git add .; git commit -m "storage(account): add"; git push origin <preston.parsard>-practice
 b. [s] Deploy the changes to Azure with command reference cr1 above
+c. [i] check-mark (practice up to this by Wednesday, 10jan2024)
 
 3. [x] Add storage account parameters for the following storage account properties: name = sta<randomstring>, sku = Standard_LRS, kind = StorageV2
 a. [s] Push changes to your branch with: git add .; git commit -m "storage(account): add parameters"; git push origin <preston.parsard>-practice
@@ -72,6 +73,7 @@ b. [x] Retrieve and display key vault secret by using a *.bicepparam file
 10.[x] Use the loadjsoncontent() function to load a collection of nic objects as an array variable in the module file. Nics will have name and private IP address proprties.
 a. [] Push changes to your branch with: git add .; git commit -m "nic(array): add loadjsoncontent()"; git push origin <preston.parsard>-practice
 b. [] Deploy the changes to Azure with command reference cr1 above
+c. [] Parking lot item.
 
 11.[x] Get the resourceid for a log analytics workspace from a different subscription (if available) from a module bicep file at the resource group scope and display as an output.
 a. [] Push changes to your branch with: git add .; git commit -m "loganalytics(workspace): add resourceid()"; git push origin <preston.parsard>-practice
