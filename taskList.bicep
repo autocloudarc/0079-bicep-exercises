@@ -36,7 +36,7 @@ e. [x] Redeploy the changes to Azure with command reference cr1 above
 2. [x] Create a storage account named sta<randomstring> in the resource group created in step 1 above where <randomstring> is the name suffix that must be randomly generated
 a. [s] Push changes to your branch with: git add .; git commit -m "storage(account): add"; git push origin <preston.parsard>-practice
 b. [s] Deploy the changes to Azure with command reference cr1 above
-c. [i] check-mark (practice up to this by Wednesday, 10jan2024)
+c. [i] check-mark (practice up to this by Wednesday, 10jan2024): Update - actually go as far you like, since we can't really break too much at this point and anyone that wants a walk through for anything on Wendesday can get it.
 
 3. [x] Add storage account parameters for the following storage account properties: name = sta<randomstring>, sku = Standard_LRS, kind = StorageV2
 a. [s] Push changes to your branch with: git add .; git commit -m "storage(account): add parameters"; git push origin <preston.parsard>-practice
