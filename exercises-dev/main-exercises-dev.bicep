@@ -28,33 +28,33 @@ resource kvt 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
   scope: iacRgp
 }
 
-// // This is just an example of how you would retrieve a secret from the existing key vault referenced above (kvt)
-// // module sql './sql.bicep' = {
-// //   name: 'deploySQL'
-// //   params: {
-// //     sqlServerName: sqlServerName
-// //     adminLogin: 'sqladmin'
-// //     adminPassword: kvt.getSecret(kvtPw)
-// //   }
-// // }
-
-// var randomString = toLower(uniqueString(subscription().subscriptionId, labResourceGroup))
-// var randomSuffix = substring(randomString, 0, 8)
-// var storageAccountPrefix = 'sta'
-// var storageAccountName = '${storageAccountPrefix}${randomSuffix}'
-// var storageAccountSku = 'Standard_LRS'
-// var storageAccountKind = 'StorageV2'
-
-// module lab './modules/labs/labs-dev.bicep' = {
-//   scope: resourceGroup
-//   name: 'lab-deployment'
+// This is just an example of how you would retrieve a secret from the existing key vault referenced above (kvt)
+// module sql './sql.bicep' = {
+//   name: 'deploySQL'
 //   params: {
-//     location: primaryLocation
-//     storageAccountName: storageAccountName
-//     storageAccountSku: storageAccountSku
-//     storageAccountKind: storageAccountKind
-//   } 
+//     sqlServerName: sqlServerName
+//     adminLogin: 'sqladmin'
+//     adminPassword: kvt.getSecret(kvtPw)
+//   }
 // }
+
+var randomString = toLower(uniqueString(subscription().subscriptionId, labResourceGroup))
+var randomSuffix = substring(randomString, 0, 8)
+var storageAccountPrefix = 'sta'
+var storageAccountName = '${storageAccountPrefix}${randomSuffix}'
+var storageAccountSku = 'Standard_LRS'
+var storageAccountKind = 'StorageV2'
+
+module lab './modules/labs/labs-dev.bicep' = {
+  scope: resourceGroup
+  name: 'lab-deployment'
+  params: {
+    location: primaryLocation
+    storageAccountName: storageAccountName
+    storageAccountSku: storageAccountSku
+    storageAccountKind: storageAccountKind
+  } 
+}
 
 output location string = primaryLocation
 output labRg string = labResourceGroup
