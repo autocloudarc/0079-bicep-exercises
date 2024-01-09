@@ -1,0 +1,112 @@
+# Use OpenID Connect to authenticate to Azure
+# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#use-the-azure-login-action-with-openid-connect
+# *** https://colinsalmcorner.com/using-oidc-with-terraform-in-github-actions/
+# change simulation
+name: '$GITHUB_WORKFLOW-$GITHUB_RUN_NUMBER-$GITHUB_EVENT_NAME'
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  pre-requisites:
+    name: 'Intialize Values'
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      uamiName: umi-bcp-002
+      rootMg: orgid
+      umiResourceGroup: umi-rgp-01
+      rgpLabName: rgp-lab
+      rgpIacName: rgp-iac
+      location: centralus
+      umiLocation: eastus2
+      stackName: 'stack-$GITHUB_WORKFLOW'
+      templateFile: "./exercises-dev/main-exercises-dev.bicep"
+      templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
+      templateSpecName: tsp-rgp-iac
+      templateSpecVersion: '1.0.$GITHUB_RUN_NUMBER'
+      templateSpecDescription: 'Template Spec for RGP IaC'
+      templateSpecSourceFile: "./exercises-dev/modules/sbx/sta-tsp.bicep"
+      templateSpecParamFile: "./exercises-dev/modules/sbx/sta-tsp-params.json"
+      deploy: true # Set to true to plan only, false to deploy or rollback
+      deployTemplateSpec: true # Set to true to deploy template spec, false to deploy template
+      rollback: false # Set to true to rollback, false to deploy
+      skipSelfHostedSetup: true # Set to true if using a GitHub runner, otherwise false to install self-hosted runner pre-requisite apps
+
+    runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.workspace }}
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    # Authenticate to Azure tenant using the Azure login action (OIDC)
+    - name: Authenticate to Azure with OIDC
+      uses: Azure/login@v1
+      with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Install Pre-Requisites for Self-Hosted Runner if required
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
+        $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
+      shell: bash
+      if: ${{ env.skipSelfHostedSetup == 'true' }}
+
+    - name: Install PowerShell
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
+        $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
+      shell: bash
+      if: ${{ env.skipSelfHostedSetup == 'true' }}
+
+    - name: deploy
+      run: |
+        az upgrade --yes --verbose
+        az bicep upgrade --verbose
+        az --version
+        az account show
+        az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        az stack sub create --name ${{ env.stackname }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --deny-settings-mode none --delete-all --yes --verbose
+      shell: bash
+      if: ${{ env.deploy == 'true' }}
+
+    - name: rollback
+      run: |
+        az upgrade --yes --verbose
+        az bicep upgrade --verbose
+        az --version
+        az account show
+        az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        az stack sub delete --name ${{ env.stackname }} --location ${{ env.location }} --yes --verbose
+      shell: bash
+      if: ${{ env.rollback == 'true' }}
+      
+    - name: deployTemplateSpec
+      run: |
+        az upgrade --yes --verbose
+        az bicep upgrade --verbose
+        az --version
+        az account show
+        az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        az ts create --name ${{ env.templateSpecName }} --version ${{ env.templateSpecVersion }} --location ${{ env.location }} --resource-group ${{ env.rgpIacName }} --description ${{ env.templateSpecDescription }} --template-file ${{ env.templateSpecSourceFile }} --yes --verbose
+        sleep 20
+        id=$(az ts show --name ${{ env.templateSpecName }} --resource-group ${{ env.rgpIacName }} --version ${{ env.templateSpecVersion }} --query 'id')
+        az deployment group create --resource-group ${{ env.rgpIacName }} --template-spec $id --parameters ${{ env.templateSpecParamFile }} --verbose
+      shell: bash
+      if: ${{ env.deployTemplateSpec == 'true' }}

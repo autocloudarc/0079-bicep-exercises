@@ -1,0 +1,139 @@
+# Use OpenID Connect to authenticate to Azure
+# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#use-the-azure-login-action-with-openid-connect
+# *** https://colinsalmcorner.com/using-oidc-with-terraform-in-github-actions/
+# change simulation
+name: Provision Azure Monitoring Agent
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  pre-requisites:
+    name: 'Setup'
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      uamiName: ama-uami-01
+      shrUserName: azureuser
+      rootMg: orgid
+      uamiResourceGroup: ama-rg-01
+      rgpName: rgp-idy
+      rgpLocation: centralus
+      uamiLocation: eastus2
+      uamiRoleAssignmentVmContrib: "Virtual Machine Contributor"
+      uamiRoleAssignmentLogAnalyticsContrib: "Log Analytics Contributor"
+      uamiRoleAssignmentArcContrib: "Azure Arc Connected Resource Administrator"
+      azCliVer: 2.53.0
+      tfVersion: 1.6.2
+      workingdir: tf
+      planOnly: false # Set to true to plan only, false to deploy or rollback
+      rollback: true # Set to true to rollback, false to deploy
+      skipSelfHostedSetup: false # Set to false to install self-hosted runner pre-requisite apps
+
+    runs-on: self-hosted
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.workingdir }}
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    # Authenticate to Azure tenant using the Azure login action (OIDC)
+    - name: Authenticate to Azure with OIDC
+      uses: Azure/login@v1
+      with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          # enable-AzPSSession: true
+
+    - name: Install Pre-Requisites for Self-Hosted Runner if required
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
+        $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
+      shell: bash
+
+    - name: Install PowerShell
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
+        $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
+      shell: bash 
+
+    # Setup Terraform (requires unzip on Ubuntu. Run 'sudo apt-get install unzip' on self-hosted runner)
+    - name: 'Setup Terraform'  
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ env.tfVersion }}
+        terraform_wrapper: true   
+
+    # Check version
+    - name: 'Terraform Version Post-Install Check'
+      id: version
+      run: terraform version
+
+    # Format
+    - name: 'Terraform Format'
+      run: terraform fmt -recursive
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_USE_OIDC: true
+
+    # Plan   
+    - name: 'Terraform Plan'
+      id: plan
+      run: terraform plan -lock=false -out=tfplan -var "pw=${{ secrets.VM_PASSWORD }}"
+      timeout-minutes: 20
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_USE_OIDC: true
+
+    # Deploy
+    - name: 'Terraform Deploy'
+      if: ${{ env.planOnly == 'false' && env.rollback == 'false' }}
+      id: apply
+      run: terraform apply -auto-approve -var "pw=${{ secrets.VM_PASSWORD }}"
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_USE_OIDC: true
+    
+    # Run policy scripts
+    - name: Policy refresh
+      if: ${{ env.planOnly == 'false' && env.rollback == 'false' }}
+      id: policy
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/policyRefresh.sh
+        $GITHUB_WORKSPACE/az-scripts/policyRefresh.sh
+      shell: bash
+    
+    # Rollback
+    - name: 'Terraform Rollback'
+      if: ${{ env.rollback == 'true' && env.planOnly == 'false' }}
+      id: destroy
+      run: terraform destroy -parallelism=50 -auto-approve -var "pw=${{ secrets.VM_PASSWORD }}"
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_USE_OIDC: true
