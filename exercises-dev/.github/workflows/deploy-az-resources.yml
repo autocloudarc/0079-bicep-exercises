@@ -36,7 +36,6 @@ jobs:
       deploy: true # Set to true to plan only, false to deploy or rollback
       deployTemplateSpec: true # Set to true to deploy template spec, false to deploy template
       rollback: false # Set to true to rollback, false to deploy
-      skipSelfHostedSetup: true # Set to true if using a GitHub runner, otherwise false to install self-hosted runner pre-requisite apps
 
     runs-on: ubuntu-latest
 
@@ -47,21 +46,17 @@ jobs:
         working-directory: ${{ github.workspace }}
 
     steps:
+    # Clear the GitHub Actions runner's local npm cache
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('**/package-lock.json') }}-${{ github.run_number }}
+
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
     
-    - name: Install Pre-Requisites for Self-Hosted Runner if required
-      run: |
-        chmod +x $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
-        $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
-      if: ${{ env.skipSelfHostedSetup == 'false' }}
-
-    - name: Install PowerShell
-      run: |
-        chmod +x $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
-        $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
-      if: ${{ env.skipSelfHostedSetup == 'false' }}
 
       # Authenticate to Azure tenant using the Azure login action (OIDC)
     - name: Authenticate to Azure with OIDC
@@ -76,7 +71,7 @@ jobs:
     - name: deploy
       uses: azure/CLI@v1
       with:
-        azcliversion: latest
+        # azcliversion: latest
         inlineScript: |
           az --version
           az account show
@@ -87,7 +82,7 @@ jobs:
     - name: rollback
       uses: azure/CLI@v1
       with:
-        azcliversion: latest
+        # azcliversion: latest
         inlineScript: |
           az --version
           az account show
@@ -98,7 +93,7 @@ jobs:
     - name: deployTemplateSpec
       uses: azure/CLI@v1
       with: 
-        azcliversion: latest
+        # azcliversion: latest
         inlineScript: |
           az --version
           az account show
