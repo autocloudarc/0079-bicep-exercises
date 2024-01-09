@@ -22,7 +22,7 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       spnName: spn-bcp-001
       rootMg: orgid
-      umiResourceGroup: umi-rgp-01
+      # umiResourceGroup: umi-rgp-01
       rgpLabName: rgp-lab
       rgpIacName: rgp-iac
       location: centralus
