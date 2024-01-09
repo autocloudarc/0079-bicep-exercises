@@ -2,7 +2,7 @@
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#use-the-azure-login-action-with-openid-connect
 # *** https://colinsalmcorner.com/using-oidc-with-terraform-in-github-actions/
 # change simulation
-name: '$GITHUB_WORKFLOW-$GITHUB_RUN_NUMBER-$GITHUB_EVENT_NAME'
+name: deploy-az-resources
 on:
   push:
     branches:
