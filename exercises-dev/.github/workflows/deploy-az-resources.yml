@@ -76,7 +76,7 @@ jobs:
           az --version
           az account show
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az stack sub create --name ${{ env.stackname }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --deny-settings-mode none --delete-all --yes --verbose
+          az stack sub create --name ${{ env.stackName }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --deny-settings-mode none --delete-all --yes --verbose
       if: ${{ env.deploy == 'true' }}
 
     - name: rollback
@@ -87,7 +87,7 @@ jobs:
           az --version
           az account show
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az stack sub delete --name ${{ env.stackname }} --location ${{ env.location }} --yes --verbose
+          az stack sub delete --name ${{ env.stackName }} --location ${{ env.location }} --yes --verbose
       if: ${{ env.rollback == 'true' }}
         
     - name: deployTemplateSpec
