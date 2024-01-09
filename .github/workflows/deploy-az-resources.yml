@@ -20,7 +20,7 @@ jobs:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      uamiName: umi-bcp-002
+      umiName: umi-bcp-002
       rootMg: orgid
       umiResourceGroup: umi-rgp-01
       rgpLabName: rgp-lab
@@ -60,6 +60,7 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          use-oidc: true
 
     - name: Install Pre-Requisites for Self-Hosted Runner if required
       run: |
