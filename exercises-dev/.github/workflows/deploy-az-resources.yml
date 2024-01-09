@@ -25,7 +25,7 @@ jobs:
       rgpLabName: rgp-lab
       rgpIacName: rgp-iac
       location: centralus
-      stackName: 'stack-${{ github.workflow }}'
+      stackName: 'stack-deploy-az-resources'
       templateFile: "./exercises-dev/main-exercises-dev.bicep"
       templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
       templateSpecName: tsp-rgp-iac
