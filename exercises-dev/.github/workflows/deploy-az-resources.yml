@@ -53,6 +53,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
+    - name: Install Pre-Requisites for Self-Hosted Runner if required
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
+        $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
+      shell: bash
+      if: ${{ env.skipSelfHostedSetup == 'false' }}
+
+    - name: Install PowerShell
+      run: |
+        chmod +x $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
+        $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
+      shell: bash
+      if: ${{ env.skipSelfHostedSetup == 'false' }}
+
     # Authenticate to Azure tenant using the Azure login action (OIDC)
     - name: Authenticate to Azure with OIDC
       uses: azure/login@v1
@@ -61,20 +75,6 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: false
- 
-    - name: Install Pre-Requisites for Self-Hosted Runner if required
-      run: |
-        chmod +x $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
-        $GITHUB_WORKSPACE/az-scripts/setupSelfHostedRunner.sh
-      shell: bash
-      if: ${{ env.skipSelfHostedSetup == 'true' }}
-
-    - name: Install PowerShell
-      run: |
-        chmod +x $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
-        $GITHUB_WORKSPACE/az-scripts/installPowerShell.sh
-      shell: bash
-      if: ${{ env.skipSelfHostedSetup == 'true' }}
 
     # https://github.com/Azure/login
     - name: deploy
