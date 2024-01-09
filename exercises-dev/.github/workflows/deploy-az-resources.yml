@@ -71,33 +71,33 @@ jobs:
     - name: deploy
       uses: azure/CLI@v1
       with:
-        # azcliversion: latest
+        azcliversion: latest
         inlineScript: |
           az --version
           az account show
-          az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub create --name ${{ env.stackname }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --deny-settings-mode none --delete-all --yes --verbose
       if: ${{ env.deploy == 'true' }}
 
     - name: rollback
       uses: azure/CLI@v1
       with:
-        # azcliversion: latest
+        azcliversion: latest
         inlineScript: |
           az --version
           az account show
-          az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub delete --name ${{ env.stackname }} --location ${{ env.location }} --yes --verbose
       if: ${{ env.rollback == 'true' }}
         
     - name: deployTemplateSpec
       uses: azure/CLI@v1
       with: 
-        # azcliversion: latest
+        azcliversion: latest
         inlineScript: |
           az --version
           az account show
-          az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az ts create --name ${{ env.templateSpecName }} --version ${{ env.templateSpecVersion }} --location ${{ env.location }} --resource-group ${{ env.rgpIacName }} --description ${{ env.templateSpecDescription }} --template-file ${{ env.templateSpecSourceFile }} --yes --verbose
           sleep 20
           id=$(az ts show --name ${{ env.templateSpecName }} --resource-group ${{ env.rgpIacName }} --version ${{ env.templateSpecVersion }} --query 'id')
