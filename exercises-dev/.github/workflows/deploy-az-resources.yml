@@ -98,7 +98,7 @@ jobs:
           az --version
           az account show
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az ts create --name ${{ env.templateSpecName }} --version ${{ env.templateSpecVersion }} --location ${{ env.location }} --description ${{ env.templateSpecDescription }} --template-file ${{ env.templateSpecSourceFile }} --yes --verbose
+          az ts create --resource-group ${{ env.rgpIacName }} --name ${{ env.templateSpecName }} --version ${{ env.templateSpecVersion }} --location ${{ env.location }} --template-file ${{ env.templateSpecSourceFile }} --version-description ${{ env.templateSpecDescription }} --yes --verbose
           sleep 20
           id=$(az ts show --name ${{ env.templateSpecName }} --resource-group ${{ env.rgpIacName }} --version ${{ env.templateSpecVersion }} --query 'id')
           az deployment group create --resource-group ${{ env.rgpIacName }} --template-spec $id --parameters ${{ env.templateSpecParamFile }} --verbose

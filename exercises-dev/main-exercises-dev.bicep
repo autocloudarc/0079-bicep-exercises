@@ -10,7 +10,6 @@ param labResourceGroup string = 'rgp-lab'
 // param keyVaultSecret string
 param iacResourceGroup string = 'rgp-iac'
 param kvtName string = 'iac-kvt-01'
-param secretName string = 'kvtPw'
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: labResourceGroup
@@ -65,7 +64,6 @@ output staAccountId3 string = lab.outputs.staAccountId3
 output staAccountId string = lab.outputs.storageAccountId
 output logAnalyticsId string = lab.outputs.lawId
 output keyVaultId string = kvt.id
-output keyVaultSecretName string = secretName
 output labStaAccountIds array = lab.outputs.staAccountIds
 output labStorageAccountInfo array = lab.outputs.storageInfo
 output labExtraStorageAccountId string = lab.outputs.additionalStaId
