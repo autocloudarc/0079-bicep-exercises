@@ -1,6 +1,7 @@
 # Use OpenID Connect to authenticate to Azure
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#use-the-azure-login-action-with-openid-connect
 # *** https://colinsalmcorner.com/using-oidc-with-terraform-in-github-actions/
+# https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-github-actions?tabs=openid%2CCLI
 
 name: deploy-az-resources
 on:
@@ -20,7 +21,7 @@ jobs:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      spnName: oid-bcp-002
+      spnName: oid-bcp-ghb-003
       rootMg: orgid
       umiResourceGroup: umi-rgp-01
       rgpLabName: rgp-lab
