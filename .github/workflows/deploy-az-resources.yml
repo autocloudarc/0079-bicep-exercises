@@ -89,18 +89,3 @@ jobs:
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub delete --name ${{ env.stackName }} --location ${{ env.location }} --yes --verbose
       if: ${{ env.rollback == 'true' }}
-        
-    - name: deployTemplateSpec
-      uses: azure/CLI@v1
-      with: 
-        azcliversion: latest
-        inlineScript: |
-          az --version
-          az account show
-          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az ts create --resource-group ${{ env.rgpIacName }} --name ${{ env.templateSpecName }} --version ${{ env.templateSpecVersion }} --location ${{ env.location }} --template-file ${{ env.templateSpecSourceFile }} --version-description ${{ env.templateSpecDescription }} --yes --verbose
-          sleep 20
-          id=$(az ts show --name ${{ env.templateSpecName }} --resource-group ${{ env.rgpIacName }} --version ${{ env.templateSpecVersion }} --query 'id')
-          az deployment group create --resource-group ${{ env.rgpIacName }} --template-spec $id --parameters ${{ env.templateSpecParamFile }} --verbose
-      if: ${{ env.deployTemplateSpec == 'true' }}
-      
