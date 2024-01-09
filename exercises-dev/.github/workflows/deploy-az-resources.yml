@@ -86,7 +86,6 @@ jobs:
           az account show
           az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub create --name ${{ env.stackname }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --deny-settings-mode none --delete-all --yes --verbose
-        shell: bash
         if: ${{ env.deploy == 'true' }}
 
     - name: rollback
@@ -100,7 +99,6 @@ jobs:
           az account show
           az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub delete --name ${{ env.stackname }} --location ${{ env.location }} --yes --verbose
-        shell: bash
         if: ${{ env.rollback == 'true' }}
         
     - name: deployTemplateSpec
@@ -115,5 +113,4 @@ jobs:
           sleep 20
           id=$(az ts show --name ${{ env.templateSpecName }} --resource-group ${{ env.rgpIacName }} --version ${{ env.templateSpecVersion }} --query 'id')
           az deployment group create --resource-group ${{ env.rgpIacName }} --template-spec $id --parameters ${{ env.templateSpecParamFile }} --verbose
-        shell: bash
         if: ${{ env.deployTemplateSpec == 'true' }}
