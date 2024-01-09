@@ -26,16 +26,8 @@ jobs:
       rgpIacName: rgp-iac
       location: centralus
       stackName: 'stack-deploy-az-resources'
-      templateFile: "./exercises-dev/main-exercises-dev.bicep"
-      templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
-      templateSpecName: tsp-rgp-iac
-      templateSpecVersion: '1.0.${{ github.run_number }}'
-      templateSpecDescription: 'Template Spec for RGP IaC'
-      templateSpecSourceFile: "./exercises-dev/modules/sbx/sta-tsp.bicep"
-      templateSpecParamFile: "./exercises-dev/modules/sbx/sta-tsp-params.json"
-      deploy: false # Set to true to plan only, false to deploy or rollback
-      deployTemplateSpec: true # Set to true to deploy template spec, false to deploy template
-      rollback: true # Set to true to rollback, false to deploy
+      deploy: true # Set to true to plan only, false to deploy or rollback
+      rollback: false # Set to true to rollback, false to deploy
 
     runs-on: ubuntu-latest
 
