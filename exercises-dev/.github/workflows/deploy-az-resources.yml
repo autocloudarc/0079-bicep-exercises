@@ -22,24 +22,21 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       spnName: oid-bcp-ghb-003
-      rootMg: orgid
-      umiResourceGroup: umi-rgp-01
       rgpLabName: rgp-lab
       rgpIacName: rgp-iac
       location: centralus
-      umiLocation: eastus2
-      stackName: 'stack-$GITHUB_WORKFLOW'
+      stackName: 'stack-${{ github.workflow }}'
       templateFile: "./exercises-dev/main-exercises-dev.bicep"
       templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
       templateSpecName: tsp-rgp-iac
-      templateSpecVersion: '1.0.$GITHUB_RUN_NUMBER'
+      templateSpecVersion: '1.0.${{ github.run_number }}'
       templateSpecDescription: 'Template Spec for RGP IaC'
       templateSpecSourceFile: "./exercises-dev/modules/sbx/sta-tsp.bicep"
       templateSpecParamFile: "./exercises-dev/modules/sbx/sta-tsp-params.json"
       deploy: true # Set to true to plan only, false to deploy or rollback
       deployTemplateSpec: true # Set to true to deploy template spec, false to deploy template
       rollback: false # Set to true to rollback, false to deploy
-      skipSelfHostedSetup: false # Set to true if using a GitHub runner, otherwise false to install self-hosted runner pre-requisite apps
+      skipSelfHostedSetup: true # Set to true if using a GitHub runner, otherwise false to install self-hosted runner pre-requisite apps
 
     runs-on: ubuntu-latest
 
@@ -92,8 +89,6 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az upgrade --yes --verbose
-          az bicep upgrade --verbose
           az --version
           az account show
           az account set --subscription -s ${{ secrets.AZURE_SUBSCRIPTION_ID }}
