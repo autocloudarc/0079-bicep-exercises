@@ -33,9 +33,9 @@ jobs:
       templateSpecDescription: 'Template Spec for RGP IaC'
       templateSpecSourceFile: "./exercises-dev/modules/sbx/sta-tsp.bicep"
       templateSpecParamFile: "./exercises-dev/modules/sbx/sta-tsp-params.json"
-      deploy: true # Set to true to plan only, false to deploy or rollback
+      deploy: false # Set to true to plan only, false to deploy or rollback
       deployTemplateSpec: true # Set to true to deploy template spec, false to deploy template
-      rollback: false # Set to true to rollback, false to deploy
+      rollback: true # Set to true to rollback, false to deploy
 
     runs-on: ubuntu-latest
 
