@@ -3,9 +3,9 @@ targetScope = 'subscription'
 // We assume that we've arleady authenticated to Azure and selected the lab subscription id or name
 
 @description('This is a Bicep file that deploys a lab environment')
-param primaryLocation string = 'centralus'
+param primaryLocation string
 
-param labResourceGroup string = 'rgp-lab'
+param labResourceGroup string
 @secure()
 param kvtPw string
 param iacResourceGroup string = 'rgp-iac'
