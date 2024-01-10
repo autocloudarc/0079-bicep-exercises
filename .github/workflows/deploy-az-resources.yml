@@ -37,8 +37,8 @@ env:
 jobs:
   stage:
     runs-on: ubuntu-latest
-    if: ${{ env.operation == 'deploy' }}
     environment: dev
+    if: ${{ env.operation == 'deploy' }}
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
