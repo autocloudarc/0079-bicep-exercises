@@ -22,22 +22,22 @@ defaults:
 
 # Global environment variables accessible from any job
 env:
-    AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-    AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-    AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-    spnName: oid-bcp-ghb-003
-    rgpLabName: rgp-lab
-    rgpIacName: rgp-iac
-    location: centralus
-    stackName: 'stack-deploy-az-resources'
-    templateFile: "./exercises-dev/main-exercises-dev.bicep"
-    templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
-    deploy: false # Set to true to plan only, false to deploy or rollback
-    rollback: true # Set to true to rollback, false to deploy
+  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  spnName: oid-bcp-ghb-003
+  rgpLabName: rgp-lab
+  rgpIacName: rgp-iac
+  location: centralus
+  stackName: 'stack-deploy-az-resources'
+  templateFile: "./exercises-dev/main-exercises-dev.bicep"
+  templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
+  operation: rollback # allowed values:[ deploy | rollback ]
 
 jobs:
   stage:
     runs-on: ubuntu-latest
+    if: ${{ env.operation == 'deploy' }}
     environment: dev
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -92,7 +92,7 @@ jobs:
           az account show
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub create --name ${{ env.stackName }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --deny-settings-mode none --delete-all --yes --verbose
-      if: ${{ env.deploy == 'true' }}
+      if: ${{ env.operation == 'deploy' }}
 
     - name: rollback
       uses: azure/CLI@v1
@@ -103,4 +103,4 @@ jobs:
           az account show
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az stack sub delete --name ${{ env.stackName }} --location ${{ env.location }} --yes --verbose
-      if: ${{ env.rollback == 'true' }}
+      if: ${{ env.operation == 'rollback' }}
