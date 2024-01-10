@@ -63,12 +63,24 @@ jobs:
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az deployment sub what-if --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --verbose
       # https://docs.microsoft.com/en-us/cli/azure/deployment/sub?view=azure-cli-latest#az_deployment_sub_what_if
-      # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json
+      # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json  
   deliver:    
     needs: stage
     runs-on: ubuntu-latest
     environment: prd
     steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Authenticate to Azure tenant using the Azure login action (OIDC)
+    - name: Authenticate to Azure with OIDC
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        enable-AzPSSession: false
 
     # https://github.com/Azure/login
     - name: deploy
