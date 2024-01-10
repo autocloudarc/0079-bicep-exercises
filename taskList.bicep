@@ -73,7 +73,7 @@ b. [x] Retrieve and display key vault secret by using a *.bicepparam file
 10.[x] Use the loadjsoncontent() function to load a collection of nic objects as an array variable in the module file. Nics will have name and private IP address proprties.
 a. [] Push changes to your branch with: git add .; git commit -m "nic(array): add loadjsoncontent()"; git push origin <preston.parsard>-practice
 b. [] Deploy the changes to Azure with command reference cr1 above
-c. [] Parking lot item.
+c. [x] Parking lot item.Update 10jan2024. We can generate the output by specifying the entire list of objects that was loaded into the nics variable.
 
 11.[x] Get the resourceid for a log analytics workspace from a different subscription (if available) from a module bicep file at the resource group scope and display as an output.
 a. [] Push changes to your branch with: git add .; git commit -m "loganalytics(workspace): add resourceid()"; git push origin <preston.parsard>-practice
