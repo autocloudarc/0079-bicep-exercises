@@ -14,45 +14,37 @@ permissions:
   id-token: write
   contents: read
 
+# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ github.workspace }}
+
+# Global environment variables accessible from any job
+env:
+    AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    spnName: oid-bcp-ghb-003
+    rgpLabName: rgp-lab
+    rgpIacName: rgp-iac
+    location: centralus
+    stackName: 'stack-deploy-az-resources'
+    templateFile: "./exercises-dev/main-exercises-dev.bicep"
+    templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
+    deploy: true # Set to true to plan only, false to deploy or rollback
+    rollback: false # Set to true to rollback, false to deploy
+
 jobs:
-  pre-requisites:
-    name: 'Intialize Values'
-    env:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      spnName: oid-bcp-ghb-003
-      rgpLabName: rgp-lab
-      rgpIacName: rgp-iac
-      location: centralus
-      stackName: 'stack-deploy-az-resources'
-      templateFile: "./exercises-dev/main-exercises-dev.bicep"
-      templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
-      deploy: true # Set to true to plan only, false to deploy or rollback
-      rollback: false # Set to true to rollback, false to deploy
-
+  stage:
     runs-on: ubuntu-latest
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ github.workspace }}
-
+    environment: dev
     steps:
-    # Clear the GitHub Actions runner's local npm cache
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('**/package-lock.json') }}-${{ github.run_number }}
-
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-    
 
-      # Authenticate to Azure tenant using the Azure login action (OIDC)
+    # Authenticate to Azure tenant using the Azure login action (OIDC)
     - name: Authenticate to Azure with OIDC
       uses: azure/login@v1
       with:
@@ -60,6 +52,23 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: false
+
+    - name: 'Test Deployment' 
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az --version
+          az account show
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          az deployment sub what-if --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --verbose
+      # https://docs.microsoft.com/en-us/cli/azure/deployment/sub?view=azure-cli-latest#az_deployment_sub_what_if
+      # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json
+  deliver:    
+    needs: stage
+    runs-on: ubuntu-latest
+    environment: prd
+    steps:
 
     # https://github.com/Azure/login
     - name: deploy
