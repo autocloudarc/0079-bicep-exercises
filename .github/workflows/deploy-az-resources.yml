@@ -31,7 +31,7 @@ env:
   location: centralus
   stackName: 'stack-deploy-az-resources'
   templateFile: "./exercises-dev/main-exercises-dev.bicep"
-  templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
+  templateParamFile: "./exercises-dev/main-exercises-dev.bicepparam"
   operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
