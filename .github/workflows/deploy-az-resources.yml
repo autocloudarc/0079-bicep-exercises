@@ -10,6 +10,7 @@ on:
     - main
   workflow_dispatch:
 
+# OIDC permissions for the GitHub Actions runner
 permissions:
   id-token: write
   contents: read
@@ -32,7 +33,7 @@ env:
   stackName: 'stack-deploy-az-resources'
   templateFile: "./exercises-dev/main-exercises-dev.bicep"
   templateParamFile: "./exercises-dev/main-exercises-dev.bicepparam"
-  operation: rollback # allowed values:[ deploy | rollback ]
+  operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
   stage:
