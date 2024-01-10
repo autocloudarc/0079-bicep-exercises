@@ -52,7 +52,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: false
-        if: ${{ env.operation == 'deploy' }}
+      if: ${{ env.operation == 'deploy' }}
 
     - name: 'Test Deployment' 
       uses: azure/CLI@v1
