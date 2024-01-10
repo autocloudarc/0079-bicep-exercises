@@ -32,8 +32,8 @@ env:
     stackName: 'stack-deploy-az-resources'
     templateFile: "./exercises-dev/main-exercises-dev.bicep"
     templateParamFile: "./exercises-dev/main-exercises-dev.parameters.json"
-    deploy: true # Set to true to plan only, false to deploy or rollback
-    rollback: false # Set to true to rollback, false to deploy
+    deploy: false # Set to true to plan only, false to deploy or rollback
+    rollback: true # Set to true to rollback, false to deploy
 
 jobs:
   stage:
