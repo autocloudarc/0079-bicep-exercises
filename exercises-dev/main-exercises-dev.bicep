@@ -6,8 +6,8 @@ targetScope = 'subscription'
 param primaryLocation string = 'centralus'
 
 param labResourceGroup string = 'rgp-lab'
-// @secure()
-// param keyVaultSecret string
+@secure()
+param kvtPw string
 param iacResourceGroup string = 'rgp-iac'
 param kvtName string = 'iac-kvt-01'
 
@@ -64,6 +64,7 @@ output staAccountId3 string = lab.outputs.staAccountId3
 output staAccountId string = lab.outputs.storageAccountId
 output logAnalyticsId string = lab.outputs.lawId
 output keyVaultId string = kvt.id
+output keVaultSecret string = kvtPw
 output labStaAccountIds array = lab.outputs.staAccountIds
 output labStorageAccountInfo array = lab.outputs.storageInfo
 output labExtraStorageAccountId string = lab.outputs.additionalStaId
