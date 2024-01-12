@@ -57,3 +57,7 @@ tf/refs/**/*
 
 # Archives
 archive/**/*
+
+# Visual Studio 
+.vs
+

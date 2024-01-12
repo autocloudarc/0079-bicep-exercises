@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\.github\\workflows",
+    "\\az-scripts",
+    "\\exercises-dev",
+    "\\exercises-dev\\modules",
+    "\\exercises-dev\\modules\\labs"
   ],
   "PreviewInSolutionExplorer": false
 }
