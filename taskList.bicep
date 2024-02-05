@@ -119,4 +119,7 @@ f. [] {Optional}: Delete the deployment stack with command reference cr2 above.
 14. [x] Bonus: Experiment with using loops for array output
 15. [x] Bonus: Experiment with using the conditional operator (ternary operator syntax in the main Bicep file output section)
 16. *[] Bonus: Use the Azure Contaner Registry to reference modules: (ref): https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules#private-module-registry
+17a. [] Bonus: Use GitHub Copilot to generate ARM templates
+17b. [] Bonus: Use bicep to convert ARM templates to Bicep files
+17c. [] Bonus: Use bicep to convert Bicep files to ARM templates
 */
