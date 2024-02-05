@@ -61,3 +61,5 @@ archive/**/*
 # Visual Studio 
 .vs
 
+.vs/VSWorkspaceState.json
+.vs/0079-bicep-exercises/v17/.wsuo

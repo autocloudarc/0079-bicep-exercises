@@ -1,11 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.github\\workflows",
     "\\az-scripts",
-    "\\exercises-dev",
     "\\exercises-dev\\modules",
-    "\\exercises-dev\\modules\\labs"
+    "\\exercises-dev\\modules\\labs",
+    "\\Local settings (.vs)"
   ],
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
