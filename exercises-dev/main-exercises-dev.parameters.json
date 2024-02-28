@@ -7,14 +7,6 @@
     },
     "labResourceGroup": {
       "value": "rgp-lab"
-    },
-    "kvtPw": {
-      "reference": {
-        "keyVault": {
-          "id": "/subscriptions/e25024e7-c4a5-4883-80af-9e81b2f8f689/resourceGroups/rgp-iac/providers/Microsoft.KeyVault/vaults/kvt-1322"
-        },
-        "secretName": "kvtPw"
-      }
     }
   }
 }
