@@ -6,10 +6,10 @@ targetScope = 'subscription'
 param primaryLocation string
 
 param labResourceGroup string
-@secure()
-param kvtPw string
+// @secure()
+// param kvtPw string
 param iacResourceGroup string = 'rgp-iac'
-param kvtName string = 'iac-kvt-01'
+param kvtName string = 'kvt-1322'
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: labResourceGroup
