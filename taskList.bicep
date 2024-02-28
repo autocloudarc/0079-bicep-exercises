@@ -122,4 +122,21 @@ f. [] {Optional}: Delete the deployment stack with command reference cr2 above.
 17a. [] Bonus: Use GitHub Copilot to generate ARM templates
 17b. [] Bonus: Use bicep to convert ARM templates to Bicep files
 17c. [] Bonus: Use bicep to convert Bicep files to ARM templates
+
+ADVANCED TOPICS
+Session 1 of 2
+
+01. [] Sharing GitHub Aactions
+02. [] Sharing GitHub Workflows
+03. [] Migrate from other CI/CD systems (Not immediately relevant, so skipping to focus on walk-throughs)
+04. [] Building custome actions (relevant?)
+
+Session 2 of 2
+05. [] GitHub API basics
+06. [] Using/managing runners
+07. [] Security best practices
+  a. [] Authentication
+  b. [] Authorization (permissions)
+  c. [] Secrets
+[] 08. Building workflows summary
 */
