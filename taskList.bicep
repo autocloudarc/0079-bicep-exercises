@@ -103,7 +103,7 @@ c. [] You may choose now to delete the deployment stack with command reference c
     kvtPw: {
       reference: {
         keyVault: {
-          id: '/subscriptions/<subscriptionid>/resourceGroups/rgp-iac/providers/Microsoft.KeyVault/vaults/iac-kvt-01'
+          id: '/subscriptions/<subscriptionid>/resourceGroups/rgp-iac/providers/Microsoft.KeyVault/vaults/kvt-1322'
         }
         secretName: 'kvtPw'
       }
