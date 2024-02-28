@@ -128,6 +128,8 @@ Session 1 of 2
 
 01. [] Sharing GitHub Aactions
 02. [] Sharing GitHub Workflows
+    a. https://docs.github.com/en/actions/using-workflows/reusing-workflows    
+    b. https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
 03. [] Migrate from other CI/CD systems (Not immediately relevant, so skipping to focus on walk-throughs)
 04. [] Building custome actions (relevant?)
 
