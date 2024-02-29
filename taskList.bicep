@@ -126,11 +126,25 @@ f. [] {Optional}: Delete the deployment stack with command reference cr2 above.
 ADVANCED TOPICS
 Session 1 of 2
 
-01. [] Sharing GitHub Aactions
-02. [] Sharing GitHub Workflows
+01. [] Sharing GitHub Actions
+02. [] Sharing GitHub Workflows with reusable workflows
     a. https://docs.github.com/en/actions/using-workflows/reusing-workflows    
     b. https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
-03. [] Migrate from other CI/CD systems (Not immediately relevant, so skipping to focus on walk-throughs)
+    use-cases:
+    1. same-repo: [calling-workflow.yml] uses: ./.github/workflows/called-workflow-same-repo.yml # substitutes a job in the calling workflow
+    2. different-repos: {owner}/{repo}/.github/workflows/{filename}@{ref} # substitutes a job in the calling workflow
+       a. {ref}: release-tag(v1) [calling-workflow.yml] uses: <org|owner>/<repo>/.github/workflows/called-workflow-diff-repo.yml@v1 # substitutes a job in the calling workflow
+       b. {ref}: branch-name(main) [calling-workflow.yml] uses: <org|owner>/<repo>/.github/workflows/called-workflow-diff-repo.yml@main # substitutes a job in the calling workflow
+       c. {ref}: commit-sha(1234567890) [calling-workflow.yml] uses: <org|owner>/<repo>/.github/workflows/called-workflow-diff-repo.yml@1234567890 # substitutes a job in the calling workflow
+    2. different-repos
+       * Rules
+         * The workflow that calls the reusable workflow is the 'calling' workflow
+         * The reusable workflow is the 'called' workflow
+         * Use the 'uses' keyword
+         * Call from the job scope (not the step scope)
+         * The reusalbe workflow substitutes a job in the calling workflow
+      
+03. [x] Migrate from other CI/CD systems (Not immediately relevant, so skipping to focus on walk-throughs)
 04. [] Building custome actions (relevant?)
 
 Session 2 of 2
