@@ -36,23 +36,18 @@ env:
   operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
-  prep:
-    uses: ./.github/workflows/prepare-for-deploy.yml
-    with:
-      operation: deploy
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  test:
-    needs: prep
+  stage:
     runs-on: ubuntu-latest
     environment: dev
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+      if: ${{ env.operation == 'deploy' }}
 
-    steps: 
-
+    # Authenticate to Azure tenant using the Azure login action (OIDC)
     - name: Authenticate to Azure with OIDC
-      uses: Azure/login@v1.6.1
+      uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -60,7 +55,7 @@ jobs:
         enable-AzPSSession: false
       if: ${{ env.operation == 'deploy' }}
 
-    - name: test-deployment
+    - name: 'Test Deployment' 
       uses: azure/CLI@v1
       with:
         azcliversion: latest
@@ -72,31 +67,25 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
       # https://docs.microsoft.com/en-us/cli/azure/deployment/sub?view=azure-cli-latest#az_deployment_sub_what_if
       # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json  
-  pre-deploy-prep:
-    needs: test    
-    uses: ./.github/workflows/prepare-for-deploy.yml
-    with:
-      operation: deploy
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
-  deploy-to-prod:
+  deliver:    
+    needs: stage
     runs-on: ubuntu-latest
     environment: prd
-    needs: pre-deploy-prep
     steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
 
+    # Authenticate to Azure tenant using the Azure login action (OIDC)
     - name: Authenticate to Azure with OIDC
-      uses: Azure/login@v1.6.1
+      uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: false
-      if: ${{ env.operation == 'deploy' }}
 
+    # https://github.com/Azure/login
     - name: deploy
       uses: azure/CLI@v1
       with:
