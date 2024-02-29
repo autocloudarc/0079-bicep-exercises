@@ -1,0 +1,37 @@
+name: prepare-for-deploy
+
+on:
+  workflow_call:
+    inputs:
+      operation:
+        description: 'The operation to perform'
+        required: true
+        default: 'deploy'
+        type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        description: 'The Azure client ID'
+        required: true
+      AZURE_TENANT_ID:
+        description: 'The Azure tenant ID'
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        description: 'The Azure subscription ID'
+        required: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Authenticate to Azure with OIDC
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: false
+        if: ${{ inputs.operation == 'deploy' }}
