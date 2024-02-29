@@ -61,7 +61,7 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
 
     - name: test-deployment
-      uses: azure/cli@v1
+      uses: azure/CLI@v1
       with:
         azcliversion: latest
         inlineScript: |
@@ -98,7 +98,7 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
 
     - name: deploy
-      uses: Azure/cli@v1.0.9
+      uses: azure/CLI@v1
       with:
         azcliversion: latest
         inlineScript: |
@@ -109,7 +109,7 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
 
     - name: rollback
-      uses: Azure/cli@v1.0.9
+      uses: azure/CLI@v1
       with:
         azcliversion: latest
         inlineScript: |
