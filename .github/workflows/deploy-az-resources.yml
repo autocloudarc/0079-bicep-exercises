@@ -50,7 +50,7 @@ jobs:
     environment: dev
     steps: 
     - name: test-deployment
-      uses: azure/CLI@v1
+      uses: Azure/cli@v1.0.9
       with:
         azcliversion: latest
         inlineScript: |
@@ -77,7 +77,7 @@ jobs:
     needs: pre-deploy-prep
     steps:
     - name: deploy
-      uses: azure/CLI@v1
+      uses: Azure/cli@v1.0.9
       with:
         azcliversion: latest
         inlineScript: |
@@ -88,7 +88,7 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
 
     - name: rollback
-      uses: azure/CLI@v1
+      uses: Azure/cli@v1.0.9
       with:
         azcliversion: latest
         inlineScript: |
