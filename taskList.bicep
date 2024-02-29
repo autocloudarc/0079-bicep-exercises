@@ -149,10 +149,10 @@ Session 1 of 2
 
 Session 2 of 2
 05. [] GitHub API basics
-06. [] Using/managing runners
-07. [] Security best practices
-  a. [] Authentication
-  b. [] Authorization (permissions)
-  c. [] Secrets
+06. [x] Using/managing runners
+07. [x] Security best practices
+  a. [x] Authentication
+  b. [x] Authorization (permissions)
+  c. [x] Secrets
 [] 08. Building workflows summary
 */
