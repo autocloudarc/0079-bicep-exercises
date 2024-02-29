@@ -151,7 +151,7 @@ Session 1 of 2
        b. https://www.youtube.com/watch?v=8KAN16uCgVI
 
 Session 2 of 2
-05. [] GitHub API basics
+05. [x] GitHub API basics (references added)
        a. https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28
        b. https://www.youtube.com/watch?v=OvfLavRD1Os
 06. [x] Using/managing runners
