@@ -26,7 +26,7 @@ jobs:
 
       - name: show-inputs
         run: |
-          echo "CALLED (REUSABLE) WORKFLOW: ${{ github.workflow }}"
+          echo "CURRENT WORKFLOW: ${{ github.workflow }}"
           echo "Operation: ${{ github.event.inputs.operation }}"
           echo "Azure Client ID: ${{ secrets.AZURE_CLIENT_ID }}"
           echo "Azure Tenant ID: ${{ secrets.AZURE_TENANT_ID }}"
