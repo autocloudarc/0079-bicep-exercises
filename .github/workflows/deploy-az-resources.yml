@@ -65,9 +65,11 @@ jobs:
         enable-AzPSSession: false
       if: ${{ env.operation == 'deploy' }}
 
-    - name: Execute PowerShell script
+    - name: execute-pwsh-script
+      run: |
+      chmod +x $GITHUB_WORKSPACE/ps-scripts/demo-powershellScript.ps1
+      $GITHUB_WORKSPACE/ps-scripts/demo-powershellScript.ps1
       shell: pwsh
-      run: .\\ps-scripts\\demo-powershellScript.ps1
 
     - name: 'Test Deployment' 
       uses: azure/CLI@v1
