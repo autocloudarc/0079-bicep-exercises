@@ -67,8 +67,8 @@ jobs:
 
     - name: execute-pwsh-script
       run: |
-        chmod +x $GITHUB_WORKSPACE/ps-scripts/demo-powershellScript.ps1
-        $GITHUB_WORKSPACE/ps-scripts/demo-powershellScript.ps1
+        chmod +x ./ps-scripts/demo-powershellScript.ps1
+        ./ps-scripts/demo-powershellScript.ps1
       shell: pwsh
 
     - name: 'Test Deployment' 
