@@ -18,8 +18,7 @@ permissions:
 # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
 defaults:
   run:
-    shell: bash
-    # working-directory: $GITHUB_WORKSPACE    
+    shell: bash 
 
 # Global environment variables accessible from any job
 env:
@@ -33,7 +32,7 @@ env:
   stackName: 'stack-deploy-az-resources'
   templateFile: "./exercises-dev/main-exercises-dev.bicep"
   templateParamFile: "./exercises-dev/main-exercises-dev.bicepparam"
-  operation: deploy # allowed values:[ deploy | rollback ]
+  operation: rollback # allowed values:[ deploy | rollback ]
 
 jobs:
   
