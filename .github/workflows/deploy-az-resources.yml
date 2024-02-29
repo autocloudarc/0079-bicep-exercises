@@ -31,8 +31,8 @@ env:
   rgpIacName: rgp-iac
   location: centralus
   stackName: 'stack-deploy-az-resources'
-  templateFile: "/home/runner/work/0079-bicep-exercises/0079-bicep-exercises/exercises-dev/main-exercises-dev.bicep"
-  templateParamFile: "/home/runner/work/0079-bicep-exercises/0079-bicep-exercises/exercises-dev/main-exercises-dev.bicepparam"
+  templateFile: "./exercises-dev/main-exercises-dev.bicep"
+  templateParamFile: "./exercises-dev/main-exercises-dev.bicepparam"
   operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
