@@ -61,7 +61,7 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
 
     - name: test-deployment
-      uses: Azure/cli@v1.0.9
+      uses: azure/cli@v1
       with:
         azcliversion: latest
         inlineScript: |
