@@ -58,7 +58,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: false
-      if: ${{ inputs.operation == 'deploy' }}
+      if: ${{ env.operation == 'deploy' }}
 
     - name: test-deployment
       uses: Azure/cli@v1.0.9
@@ -95,7 +95,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         enable-AzPSSession: false
-      if: ${{ inputs.operation == 'deploy' }}
+      if: ${{ env.operation == 'deploy' }}
 
     - name: deploy
       uses: Azure/cli@v1.0.9
