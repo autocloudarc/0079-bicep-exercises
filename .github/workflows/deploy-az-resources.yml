@@ -36,6 +36,16 @@ env:
   operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
+  
+  reusable-demo1:
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      operation: deploy
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  
   stage:
     runs-on: ubuntu-latest
     environment: dev
@@ -67,6 +77,15 @@ jobs:
       if: ${{ env.operation == 'deploy' }}
       # https://docs.microsoft.com/en-us/cli/azure/deployment/sub?view=azure-cli-latest#az_deployment_sub_what_if
       # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json  
+  reusable-demo2:
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      operation: deploy
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  
   deliver:    
     needs: stage
     runs-on: ubuntu-latest

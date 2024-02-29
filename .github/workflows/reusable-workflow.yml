@@ -1,0 +1,34 @@
+name: prepare-for-deploy
+
+on:
+  workflow_call:
+    inputs:
+      operation:
+        description: 'The operation to perform'
+        required: true
+        default: 'deploy'
+        type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        description: 'The Azure client ID'
+        required: true
+      AZURE_TENANT_ID:
+        description: 'The Azure tenant ID'
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        description: 'The Azure subscription ID'
+        required: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: show-inputs
+        run: |
+          echo "CALLED (REUSABLE) WORKFLOW: ${{ github.workflow }}"
+          echo "Operation: ${{ github.event.inputs.operation }}"
+          echo "Azure Client ID: ${{ secrets.AZURE_CLIENT_ID }}"
+          echo "Azure Tenant ID: ${{ secrets.AZURE_TENANT_ID }}"
+          echo "Azure Subscription ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+      
