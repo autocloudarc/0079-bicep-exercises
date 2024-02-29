@@ -1,0 +1,83 @@
+# FILEPATH: .github/workflows/deployDemandForecastInfra.yml
+# Use OpenID Connect to authenticate to Azure
+# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#use-the-azure-login-action-with-openid-connect
+# *** https://colinsalmcorner.com/using-oidc-with-terraform-in-github-actions/
+# https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-github-actions?tabs=openid%2CCLI
+
+name: deploy-demand-forecast-infra
+on:
+  push:
+    branches:
+      - none
+  pull_request:
+    branches:
+      - none
+  workflow_dispatch:
+
+# OIDC permissions for the GitHub-hosted runner
+#  permissions:
+#   id-token: write
+#   contents: read
+
+# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+defaults:
+  run:
+    shell: bash
+    working-directory: Bicep
+
+# Global environment variables accessible from any job
+# env:
+#   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#   location: eastus2
+#   stackName: 'stack-${{ github.workflow }}'
+#   templateFile: main.bicep
+#   templateParametersFile: main.json
+#   denySettingsMode: none
+#   devSubscriptionId: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+#   prdSubscriptionId: ${{ secrets.PRD_SUBSCRIPTION_ID }}
+#   subList: |
+#     [
+#         ${{ secrets.DEV_SUBSCRIPTION_ID }},
+#         ${{ secrets.PRD_SUBSCRIPTION_ID }}
+#     ]
+#   operation: planOnly # Options: planOnly, deploy, rollback
+#   environment: all # Options: dev, prd, all
+#   secretVariableSource: ghSecrets # Options: ghSecrets, keyVault
+
+jobs: 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@latest
+        with:
+          fetch-depth: 0
+          submodules: true
+      - name: Azure CLI script
+        run: |
+            echo "Hello, world!"
+            echo "This is an inline script."    
+    
+        # if:
+        #   ${{ (env.operation == 'deploy' || env.operation == 'planOnly') }}
+
+          # Authenticate to Azure tenant using the Azure login action (OIDC)
+          # Using oid-ghb-0080 app registration and service principal. OIDC credential name is: oid-ghb-0080-br-main.
+    #   - name: authenticateToAzureWithOIDC
+    #     uses: azure/login@v1
+    #     with:
+    #       client-id: ${{ secrets.AZURE_CLIENT_ID }}
+    #       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+    #       subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    #       enable-AzPSSession: false
+    #     if: ${{ (env.operation == 'deploy' || env.operation == 'planOnly') }}
+
+    #   - name: Plan Deployment
+    #     if: ${{ (env.operation == 'deploy' || env.operation == 'planOnly') }}
+    #     run: |
+    #       az account show
+    #       az account set --subscription ${{ env.devSubscriptionId }}
+    #       az deployment sub create --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParametersFile }} \
+    #       --parameters dbUserName=${{ secrets.DB_USER_NAME }} dbUserPw=${{ secrets.DB_USER_PW }} --what-if --verbose
