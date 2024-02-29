@@ -126,7 +126,7 @@ f. [] {Optional}: Delete the deployment stack with command reference cr2 above.
 ADVANCED TOPICS
 Session 1 of 2
 
-01. [] Sharing GitHub Actions
+01. [x] Sharing GitHub Actions. See item 02 below.
 02. [] Sharing GitHub Workflows with reusable workflows
     a. https://docs.github.com/en/actions/using-workflows/reusing-workflows    
     b. https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
@@ -145,7 +145,10 @@ Session 1 of 2
          * The reusalbe workflow substitutes a job in the calling workflow
       
 03. [x] Migrate from other CI/CD systems (Not immediately relevant, so skipping to focus on walk-throughs)
-04. [] Building custome actions (relevant?)
+04. [x] Building custome actions (relevant?): Skipping, since it requires knowledge of javascript and typescript.
+       See: 
+       a. https://www.youtube.com/watch?v=N26xgQ7kLKo
+       b. https://www.youtube.com/watch?v=8KAN16uCgVI
 
 Session 2 of 2
 05. [] GitHub API basics
