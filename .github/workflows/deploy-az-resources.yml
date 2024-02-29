@@ -71,6 +71,13 @@ jobs:
         ./ps-scripts/demo-powershellScript.ps1
       shell: pwsh
 
+    - name: execute-pwsh-script-inline
+      run: |
+        $PSVersionTable  
+        Write-Host "Executing inline PowerShell Commands"
+        Get-ChildItem
+      shell: pwsh
+
     - name: 'Test Deployment' 
       uses: azure/CLI@v1
       with:
@@ -84,6 +91,7 @@ jobs:
       # https://docs.microsoft.com/en-us/cli/azure/deployment/sub?view=azure-cli-latest#az_deployment_sub_what_if
       # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json  
   reusable-demo2:
+    needs: reusable-demo1
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       operation: deploy
