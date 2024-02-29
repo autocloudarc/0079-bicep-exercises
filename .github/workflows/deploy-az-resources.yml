@@ -19,7 +19,7 @@ permissions:
 defaults:
   run:
     shell: bash
-    working-directory: $GITHUB_WORKSPACE    
+    working-directory: "./exercises-dev"    
 
 # Global environment variables accessible from any job
 env:
@@ -31,8 +31,8 @@ env:
   rgpIacName: rgp-iac
   location: centralus
   stackName: 'stack-deploy-az-resources'
-  templateFile: "./exercises-dev/main-exercises-dev.bicep"
-  templateParamFile: "./exercises-dev/main-exercises-dev.bicepparam"
+  templateFile: "main-exercises-dev.bicep"
+  templateParamFile: "main-exercises-dev.bicepparam"
   operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
