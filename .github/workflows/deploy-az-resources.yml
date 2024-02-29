@@ -33,7 +33,7 @@ env:
   stackName: 'stack-deploy-az-resources'
   templateFile: "./exercises-dev/main-exercises-dev.bicep"
   templateParamFile: "./exercises-dev/main-exercises-dev.bicepparam"
-  operation: rollback # allowed values:[ deploy | rollback ]
+  operation: deploy # allowed values:[ deploy | rollback ]
 
 jobs:
   prep:
@@ -52,12 +52,12 @@ jobs:
     - name: test-deployment
       uses: azure/CLI@v1
       with:
-          azcliversion: latest
-          inlineScript: |
-            az --version
-            az account show
-            az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            az deployment sub what-if --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --verbose
+        azcliversion: latest
+        inlineScript: |
+          az --version
+          az account show
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          az deployment sub what-if --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters ${{ env.templateParamFile }} --verbose
       if: ${{ env.operation == 'deploy' }}
       # https://docs.microsoft.com/en-us/cli/azure/deployment/sub?view=azure-cli-latest#az_deployment_sub_what_if
       # az deployment sub what-if --location WestUS --template-file ./exercises-dev/main-exercises-dev.bicep --parameters ./exercises-dev/main-exercises-dev.parameters.json  
