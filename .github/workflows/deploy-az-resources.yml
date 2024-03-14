@@ -50,11 +50,16 @@ jobs:
     with:
       operation: deploy
 
-  reusable-workflow-tag:
-    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-tag.yml@v2
+  reusable-workflow-cmt:
+    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-cmt.yml@3369a53a319278e2fa98e98e4d6f4111c1fe5e96
     with:
       operation: deploy
-  
+
+  reusable-workflow-tag:
+    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-tag.yml@v1.0 
+    with:
+      operation: deploy
+
   stage:
     runs-on: ubuntu-latest
     environment: dev
