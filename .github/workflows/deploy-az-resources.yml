@@ -50,10 +50,10 @@ jobs:
     with:
       operation: rollback
 
-  reusable-workflow-cmt:
-    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-cmt.yml@08c15abaeea18b2f994c01df611d583a97aaf264
-    with:
-      operation: deploy
+  # reusable-workflow-cmt:
+  #   uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-cmt.yml@08c15abaeea18b2f994c01df611d583a97aaf264
+  #   with:
+  #     operation: deploy
   
   stage:
     runs-on: ubuntu-latest
