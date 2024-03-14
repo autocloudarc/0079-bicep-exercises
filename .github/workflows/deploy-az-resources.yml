@@ -46,9 +46,9 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
   reusable-workflow-tag:
-    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-tag.yml@v1
+    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-brn.yml@main
     with:
-      operation: deploy
+      operation: rollback
   
   stage:
     runs-on: ubuntu-latest
