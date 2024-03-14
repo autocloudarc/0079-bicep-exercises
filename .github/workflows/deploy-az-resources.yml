@@ -48,18 +48,13 @@ jobs:
   reusable-workflow-brn:
     uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-brn.yml@main
     with:
-      operation: deploy
+      operation: rollback
 
   reusable-workflow-cmt:
-    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-cmt.yml@3369a53a319278e2fa98e98e4d6f4111c1fe5e96
+    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-cmt.yml@08c15abaeea18b2f994c01df611d583a97aaf264
     with:
       operation: deploy
-
-  # reusable-workflow-tag:
-  #   uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-tag.yml@v1.0 
-  #   with:
-  #     operation: deploy
-
+  
   stage:
     runs-on: ubuntu-latest
     environment: dev
