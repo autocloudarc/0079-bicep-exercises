@@ -51,7 +51,7 @@ jobs:
       operation: deploy
 
   reusable-workflow-tag:
-    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-tag.yml@v1
+    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-tag.yml@v2
     with:
       operation: deploy
   
