@@ -49,6 +49,11 @@ jobs:
     uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-brn.yml@main
     with:
       operation: deploy
+
+  reusable-workflow-tag:
+    uses: autocloudarc/0079-called-workflows/.github/workflows/called-workflow-brn.yml@v1.0.0
+    with:
+      operation: deploy
   
   stage:
     runs-on: ubuntu-latest
